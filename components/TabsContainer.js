@@ -2,6 +2,7 @@ import { createMaterialTopTabNavigator, createStackNavigator, createAppContainer
 import DeckList from './DeckList';
 import NewDeck from './NewDeck';
 import Deck from './Deck';
+import Card from './Card';
 import About from './About';
 import { Constants } from 'expo';
 
@@ -23,18 +24,31 @@ const DeckStack = createStackNavigator({
     navigationOptions: {
       header: null,
     },
+  },
+  Card: {
+    screen: Card,
+    navigationOptions: {
+      header: null,
+    }
   }
-});
+},
+{
+  initialRouteName: 'DeckList',
+  defaultNavigationOptions: {
+    headerStyle: {
+      backgroundColor: '#f4511e',
+    },
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+      fontWeight: 'bold',
+    },
+  },
+}
+);
 
 const TabNavigator = createMaterialTopTabNavigator({
   Decks: DeckStack,
   About: About
-}, {
-  navigationOptions: {
-    headerStyle: {
-      marginTop: Constants.statusBarHeight
-    }
-  }
 });
 
 export default createAppContainer(TabNavigator);
