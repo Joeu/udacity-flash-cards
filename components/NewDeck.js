@@ -2,16 +2,6 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, Platform, TouchableOpacity } from 'react-native';
 
 class NewDeck extends Component {
-  static navigationOptions = () => {
-    return {
-      headerLeft: (
-        <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
-          <Text>Back</Text>
-        </TouchableOpacity>
-      )
-    }
-  }
-  
   render() {
     return (
       <View>

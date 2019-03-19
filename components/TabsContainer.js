@@ -11,40 +11,41 @@ const DeckStack = createStackNavigator({
     screen: DeckList,
     navigationOptions: {
       header: null,
-    },
+    }
   },
   NewDeck: {
     screen: NewDeck,
     navigationOptions: {
-      header: null,
-    },
+      title: 'Create new Deck',
+      headerForceInset: {top: 'never'}
+    }
   },
   Deck: {
     screen: Deck,
     navigationOptions: {
-      header: null,
-    },
+      title: 'Deck',
+      headerForceInset: {top: 'never'}
+    }
   },
   Card: {
     screen: Card,
     navigationOptions: {
-      header: null,
+      title: 'Card',
+      headerForceInset: {top: 'never'}
     }
   }
-},
-{
-  initialRouteName: 'DeckList',
-  defaultNavigationOptions: {
-    headerStyle: {
-      backgroundColor: '#f4511e',
-    },
-    headerTintColor: '#fff',
-    headerTitleStyle: {
-      fontWeight: 'bold',
-    },
-  },
-}
-);
+});
+
+DeckStack.navigationOptions = ({ navigation }) => {
+  let tabBarVisible = true;
+  if (navigation.state.index > 0) {
+    tabBarVisible = false;
+  }
+
+  return {
+    tabBarVisible,
+  };
+};
 
 const TabNavigator = createMaterialTopTabNavigator({
   Decks: DeckStack,

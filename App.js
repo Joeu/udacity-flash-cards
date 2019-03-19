@@ -16,7 +16,7 @@ export default class App extends Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <UdaciStatusBar backgroundColor='white' barStyle='light-content' />
+        <UdaciStatusBar backgroundColor='#292477' barStyle='light-content' />
         <TabsContainer />
       </View>
     );
