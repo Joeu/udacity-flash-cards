@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Platform, TouchableOpacity } from 'react-native';
-import Deck from './Deck';
 
 class DeckList extends Component {
   render() {
@@ -9,9 +8,6 @@ class DeckList extends Component {
         {/* Display Decks retrieved */}
         <TouchableOpacity onPress={() => this.props.navigation.navigate('Deck')}>
           <Text style={styles.btn}>Deck</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => this.props.navigation.navigate('NewDeck')}>
-          <Text style={styles.btn}>New Deck</Text>
         </TouchableOpacity>
       </View>
     )
@@ -23,6 +19,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#000080',
     padding: 10,
+    // backgroundColor: '#000000',
     borderRadius: 2,
     alignSelf: 'center',
     justifyContent: 'center',

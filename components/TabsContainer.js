@@ -3,7 +3,7 @@ import DeckList from './DeckList';
 import NewDeck from './NewDeck';
 import Deck from './Deck';
 import Card from './Card';
-import About from './About';
+import NewCard from './NewCard';
 import { Constants } from 'expo';
 
 const DeckStack = createStackNavigator({
@@ -11,13 +11,6 @@ const DeckStack = createStackNavigator({
     screen: DeckList,
     navigationOptions: {
       header: null,
-    }
-  },
-  NewDeck: {
-    screen: NewDeck,
-    navigationOptions: {
-      title: 'Create new Deck',
-      headerForceInset: {top: 'never'}
     }
   },
   Deck: {
@@ -33,6 +26,13 @@ const DeckStack = createStackNavigator({
       title: 'Card',
       headerForceInset: {top: 'never'}
     }
+  },
+  NewCard: {
+    screen: NewCard,
+    navigationOptions: {
+      title: 'New Card',
+      headerForceInset: {top: 'never'}
+    }
   }
 });
 
@@ -44,12 +44,13 @@ DeckStack.navigationOptions = ({ navigation }) => {
 
   return {
     tabBarVisible,
+    swipeEnabled: false
   };
 };
 
 const TabNavigator = createMaterialTopTabNavigator({
   Decks: DeckStack,
-  About: About
+  NewDeck: NewDeck
 });
 
 export default createAppContainer(TabNavigator);

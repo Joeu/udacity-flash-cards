@@ -1,22 +1,35 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Platform, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Picker, TouchableOpacity } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 
-class NewDeck extends Component {
+class NewCard extends Component {
   constructor(props) {
     super(props);
-    this.state = {text: 'Title'};
+    this.state = {
+      question: 'Title',
+      answer: 'yes'
+    };
   }
 
   render() {
     return (
       <View>
-        <Text style={styles.text}>Deck Title</Text>
+        <Text style={styles.text}>Question</Text>
         <TextInput
           style={styles.input}
           onChangeText={(text) => this.setState({text})}
           value={this.state.text}
         />
+        <Text style={styles.text}>Answer</Text>
+        <Picker
+          selectedValue={this.state.answer}
+          style={{height: 50, width: 100}}
+          onValueChange={(itemValue, itemIndex) =>
+            this.setState({answer: itemValue})
+          }>
+          <Picker.Item label="YES" value="yes" />
+          <Picker.Item label="NO" value="no" />
+        </Picker>
         <TouchableOpacity  style={styles.button}>
           <Text>CREATE</Text>
         </TouchableOpacity>
@@ -49,4 +62,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default NewDeck;
+export default NewCard;
