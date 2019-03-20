@@ -6,7 +6,7 @@ class Card extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>{this.props.item.question}</Text>
+        <Text style={styles.questionText}>{this.props.item.question}</Text>
         <View style={{flexDirection: 'row'}}>
           <TouchableOpacity onPress={() => alert('YES')}>
             <FontAwesome name='check-circle' size={30} />
@@ -23,8 +23,6 @@ class Card extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-    backgroundColor: '#f000',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -34,7 +32,8 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   questionText: {
-    fontSize: 60,
+    fontSize: 30,
+    textAlign: 'center'
   }
 });
 

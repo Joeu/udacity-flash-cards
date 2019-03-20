@@ -15,7 +15,6 @@ class Deck extends Component {
         </TouchableOpacity>
       )
     }
-    
   };
 
   render() {
@@ -26,7 +25,7 @@ class Deck extends Component {
         {deck.cards 
           &&  deck.cards.map((card) => {
                 return (
-                  <View key={card.key}>
+                  <View style={styles.container} key={card.key}>
                     <Card item={card} />
                   </View>
                 )
@@ -38,12 +37,11 @@ class Deck extends Component {
 }
 
 const styles = StyleSheet.create({
-  viewPager: {
-    flex: 1
-  },
-  pageStyle: {
+  container: {
+    flex: 1,
+    backgroundColor: '#f000',
     alignItems: 'center',
-    padding: 20,
+    justifyContent: 'center',
   }
 });
 
