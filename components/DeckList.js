@@ -1,14 +1,58 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Platform, TouchableOpacity } from 'react-native';
+import { 
+  View, 
+  Text, 
+  StyleSheet, 
+  Platform, 
+  SearchBar, 
+  TouchableOpacity, 
+  FlatList, 
+  ActivityIndicator
+} from 'react-native';
+import { decks } from '../utils/mockData';
 
 class DeckList extends Component {
+  state = {
+    decks: []
+  }
+
+  componentDidMount() {
+    this.setState({
+      decks: decks
+    })
+  }
+
+  renderSeparator = () => {
+    return (
+      <View
+        style={{
+          height: 1,
+          width: "100%",
+          backgroundColor: "#CED0CE",
+        }}
+      />
+    );
+  };
+
   render() {
     return (
       <View>
-        {/* Display Decks retrieved */}
-        <TouchableOpacity onPress={() => this.props.navigation.navigate('Deck')}>
-          <Text style={styles.btn}>Deck</Text>
-        </TouchableOpacity>
+        {this.state.decks.length > 0
+          &&  <FlatList
+                data={this.state.decks}
+                keyExtractor={(item, index) => index.toString()}
+                renderItem={({ item }) => (
+                  <TouchableOpacity 
+                    style={styles.btn}
+                    onPress={() => this.props.navigation.navigate('Deck', deck={item})}>
+                    <Text>
+                      {item.title}
+                    </Text>
+                  </TouchableOpacity>
+                )}
+                ItemSeparatorComponent={this.renderSeparator}
+              />
+        }
       </View>
     )
   }
@@ -19,7 +63,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#000080',
     padding: 10,
-    // backgroundColor: '#000000',
     borderRadius: 2,
     alignSelf: 'center',
     justifyContent: 'center',

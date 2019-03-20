@@ -16,7 +16,6 @@ const DeckStack = createStackNavigator({
   Deck: {
     screen: Deck,
     navigationOptions: {
-      title: 'Deck',
       headerForceInset: {top: 'never'}
     }
   },

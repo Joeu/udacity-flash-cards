@@ -4,37 +4,34 @@ import { View, Text, Button, StyleSheet, TouchableOpacity, FlatList } from 'reac
 import Card from './Card';
 import Swiper from 'react-native-swiper';
 
-const cardsData = [
-  {key: 1, question: 'Is 1 a letter?', answer: 'no'},
-  {key: 2, question: 'Is B a letter?', answer: 'yes'},
-  {key: 3, question: 'Is 3 a letter?', answer: 'no'},
-  {key: 4, question: 'Is D a letter?', answer: 'yes'},
-  {key: 5, question: 'Is 5 a letter?', answer: 'no'}
-]
-
 class Deck extends Component {
-  state = {
-    data: cardsData
-  }
-
-  static navigationOptions = ({ navigation }) => ({
-    headerRight: (
-      <TouchableOpacity onPress={() => navigation.navigate('NewCard')}>
-        <FontAwesome name='comment' size={30} />
-      </TouchableOpacity>
-    )
-  });
+  static navigationOptions = ({ navigation }) => {
+    const deckTitle = navigation.state.params.item.title;
+    return {
+      title: deckTitle,
+      headerRight: (
+        <TouchableOpacity onPress={() => navigation.navigate('NewCard')}>
+          <FontAwesome name='comment' size={30} />
+        </TouchableOpacity>
+      )
+    }
+    
+  };
 
   render() {
+    const { navigation } = this.props;
+    const deck = navigation.state.params.item
     return (
       <Swiper showsButtons={true}>
-        {this.state.data.map((card) => {
-          return (
-            <View key={card.key}>
-              <Card item={card} />
-            </View>
-          )
-        })}
+        {deck.cards 
+          &&  deck.cards.map((card) => {
+                return (
+                  <View key={card.key}>
+                    <Card item={card} />
+                  </View>
+                )
+              })
+        }
       </Swiper>
     )
   }
