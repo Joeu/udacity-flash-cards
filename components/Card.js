@@ -17,18 +17,18 @@ class Card extends Component {
 
   render() {
     return (
-      <View style={[styles.container, {backgroundColor: this.state.cardBGColor}]}>
-        <View style={styles.questionBox}>
+      <View style={[styles.container, styles.box, {backgroundColor: this.state.cardBGColor}]}>
+        <View style={styles.box}>
           <Text style={styles.questionText}>{this.props.item.question}</Text>
         </View>
-        <View style={styles.answerBox}>
+        <View style={[styles.box, styles.answerBox]}>
           <TouchableOpacity 
-            style={[styles.box, {flex: 1}]} 
+            style={[styles.btn, {flex: 1}]} 
             onPress={() => this._checkIfAnswerIsCorrect('yes')}>
             <FontAwesome style={styles.answerText} name='check-circle' />
           </TouchableOpacity>
           <TouchableOpacity 
-            style={[styles.box, {flex: 1}]} 
+            style={[styles.btn, {flex: 1}]} 
             onPress={() => this._checkIfAnswerIsCorrect('no')}>
             <FontAwesome style={styles.answerText} name='times-circle' />
           </TouchableOpacity>
@@ -39,27 +39,21 @@ class Card extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  box: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  container: {
     marginLeft: 25,
     marginRight: 25,
     marginTop: 80,
     marginBottom: 80
   },
-  questionBox: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   answerBox: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: 'row'
   },
-  box: {
+  btn: {
     height: 50,
     margin: 10,
   },

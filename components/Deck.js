@@ -11,7 +11,7 @@ class Deck extends Component {
       title: deckTitle,
       headerRight: (
         <TouchableOpacity onPress={() => navigation.navigate('NewCard')}>
-          <FontAwesome name='comment' size={30} />
+          <FontAwesome name='comment' style={styles.newCardButton} />
         </TouchableOpacity>
       )
     }
@@ -42,6 +42,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#f000',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  newCardButton: {
+    marginRight: 20,
+    fontSize: 30
   }
 });
 
