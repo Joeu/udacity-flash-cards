@@ -9,17 +9,40 @@ import {
   FlatList, 
   ActivityIndicator
 } from 'react-native';
-import { decks } from '../utils/mockData';
+// import { decks } from '../utils/mockData';
+import { fetchDecksResults, clearDecks } from '../utils/api';
 
 class DeckList extends Component {
   state = {
-    decks: []
+    decks: this.props.decks && this.props.decks.length > 0
+      ? this.props.decks.length
+      : []
+  }
+
+  componentWillUpdate() {
+    console.log("COMPONENT WILL UPDATE");
+    fetchDecksResults()
+      .then(decks => 
+        this.setState({
+          decks: Object.values(decks)
+        })
+      )
+      .catch(error => console.log("ERROR: ", error))
+  }
+
+  componentWillMount() {
+    console.log("COMPONENT WILL MOUNT");
   }
 
   componentDidMount() {
-    this.setState({
-      decks: decks
-    })
+    console.log("COMPONENT DID MOUNT");
+    fetchDecksResults()
+      .then(decks => 
+        this.setState({
+          decks: Object.values(decks)
+        })
+      )
+      .catch(error => console.log("ERROR: ", error))
   }
 
   createRows = (data, columns) => {
@@ -34,6 +57,10 @@ class DeckList extends Component {
       lastRowElements += 1;
     }
     return data;
+  }
+
+  clearDecks = () => {
+    clearDecks();
   }
 
   render() {
@@ -58,6 +85,13 @@ class DeckList extends Component {
                 )}
               />
         }
+        <TouchableOpacity 
+          style={styles.item}
+          onPress={() => this.clearDecks()}>
+          <Text>
+            CLEAR
+          </Text>
+        </TouchableOpacity>
       </View>
     )
   }

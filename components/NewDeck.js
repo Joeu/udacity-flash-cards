@@ -1,11 +1,28 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Platform, TouchableOpacity } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
+import { createDeck, fetchDecksResults } from '../utils/api';
 
 class NewDeck extends Component {
   constructor(props) {
     super(props);
-    this.state = {text: 'Title'};
+    this.state = {title: 'Title'};
+  }
+
+  toHome = () => {
+    this.props.navigation.navigate('DeckList', {decks: fetchDecksResults()});
+  }
+
+  submit = () => {
+    const key = this.state.title;
+    const deck = {
+      title: this.state.title,
+      cards: []
+    }
+
+    createDeck({ key, deck });
+
+    this.toHome();
   }
 
   render() {
@@ -14,10 +31,10 @@ class NewDeck extends Component {
         <Text style={styles.text}>Deck Title</Text>
         <TextInput
           style={styles.input}
-          onChangeText={(text) => this.setState({text})}
-          value={this.state.text}
+          onChangeText={(title) => this.setState({title})}
+          value={this.state.title}
         />
-        <TouchableOpacity  style={styles.button}>
+        <TouchableOpacity onPress={this.submit}  style={styles.button}>
           <Text>CREATE</Text>
         </TouchableOpacity>
       </View>
