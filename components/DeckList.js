@@ -22,35 +22,40 @@ class DeckList extends Component {
     })
   }
 
-  renderSeparator = () => {
-    return (
-      <View
-        style={{
-          height: 1,
-          width: "100%",
-          backgroundColor: "#CED0CE",
-        }}
-      />
-    );
-  };
+  createRows = (data, columns) => {
+    const rows = Math.floor(data.length / columns);
+    let lastRowElements = data.length - rows * columns;
+    while (lastRowElements !== columns) {
+      data.push({
+        id: `empty-${lastRowElements}`,
+        name: `empty-${lastRowElements}`,
+        empty: true
+      });
+      lastRowElements += 1;
+    }
+    return data;
+  }
 
   render() {
+    const columns = 2;
     return (
       <View>
         {this.state.decks.length > 0
           &&  <FlatList
-                data={this.state.decks}
+                data={this.createRows(this.state.decks, columns)}
                 keyExtractor={(item, index) => index.toString()}
+                numColumns={columns}
                 renderItem={({ item }) => (
-                  <TouchableOpacity 
-                    style={styles.btn}
-                    onPress={() => this.props.navigation.navigate('Deck', deck={item})}>
-                    <Text>
-                      {item.title}
-                    </Text>
-                  </TouchableOpacity>
+                  item.empty 
+                    ? <View style={[styles.item, styles.itemEmpty]} />
+                    : <TouchableOpacity 
+                        style={styles.item}
+                        onPress={() => this.props.navigation.navigate('Deck', deck={item})}>
+                        <Text>
+                          {item.title}
+                        </Text>
+                      </TouchableOpacity>
                 )}
-                ItemSeparatorComponent={this.renderSeparator}
               />
         }
       </View>
@@ -59,14 +64,21 @@ class DeckList extends Component {
 }
 
 const styles = StyleSheet.create({
-  btn: {
-    textAlign: 'center',
-    color: '#000080',
-    padding: 10,
-    borderRadius: 2,
-    alignSelf: 'center',
-    justifyContent: 'center',
-    alignItems: 'center'
+  item: {
+    alignItems: "center",
+    backgroundColor: "transparent",
+    flexGrow: 1,
+    margin: 4,
+    padding: 20,
+    flexBasis: 0,
+    borderRadius: 4,
+    borderWidth: 1,
+    borderColor: '#FFA500',
+    height: 100
+  },
+  itemEmpty: {
+    backgroundColor: "transparent",
+    borderWidth: 0,
   }
 });
 
