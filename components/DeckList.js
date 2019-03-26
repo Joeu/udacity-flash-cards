@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { 
   View, 
   Text, 
@@ -9,40 +10,15 @@ import {
   FlatList, 
   ActivityIndicator
 } from 'react-native';
-// import { decks } from '../utils/mockData';
-import { fetchDecksResults, clearDecks } from '../utils/api';
+import { fetchDecks } from '../actions';
 
 class DeckList extends Component {
   state = {
-    decks: this.props.decks && this.props.decks.length > 0
-      ? this.props.decks.length
-      : []
-  }
-
-  componentWillUpdate() {
-    console.log("COMPONENT WILL UPDATE");
-    fetchDecksResults()
-      .then(decks => 
-        this.setState({
-          decks: Object.values(decks)
-        })
-      )
-      .catch(error => console.log("ERROR: ", error))
-  }
-
-  componentWillMount() {
-    console.log("COMPONENT WILL MOUNT");
+    decks: []
   }
 
   componentDidMount() {
-    console.log("COMPONENT DID MOUNT");
-    fetchDecksResults()
-      .then(decks => 
-        this.setState({
-          decks: Object.values(decks)
-        })
-      )
-      .catch(error => console.log("ERROR: ", error))
+    this.props.fetchDecks();
   }
 
   createRows = (data, columns) => {
@@ -116,4 +92,12 @@ const styles = StyleSheet.create({
   }
 });
 
-export default DeckList;
+const mapStateToProps = state => ({
+  // decks: state.
+})
+
+const mapDispatchToProps = dispatch => ({
+  fetchDecks: () => dispatch(fetchDecks())
+})
+
+export default connect(null, mapDispatchToProps)(DeckList);

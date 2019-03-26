@@ -10,7 +10,7 @@ class NewDeck extends Component {
   }
 
   toHome = () => {
-    this.props.navigation.navigate('DeckList', {decks: fetchDecksResults()});
+    this.props.navigation.navigate('DeckList');
   }
 
   submit = () => {
