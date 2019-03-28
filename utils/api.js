@@ -13,14 +13,10 @@ export const fetchDecksResults = async() => {
 }
 
 export const createDeck = async({ key, deck }) => {
-  try {
-    await AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify({
-      [key]: deck
-    }));
-  } catch(error) {
-    console.log("ERROR: ", error);  
-  }
-}
+  return AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify({
+    [key]: deck
+  }));
+} 
 
 export const clearDecks = async() => {
   try {
@@ -29,4 +25,14 @@ export const clearDecks = async() => {
   } catch(error) {
     console.log("ERROR: ", error);  
   }
+}
+
+export function deleteDeck(key) {
+  return AsyncStorage.getItem(DECKS_STORAGE_KEY)
+    .then((results) => {
+      const data = JSON.parse(results);
+      data[key] = undefined;
+      delete data[key];
+      AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(data));
+    })
 }

@@ -10,13 +10,9 @@ import {
   FlatList, 
   ActivityIndicator
 } from 'react-native';
-import { fetchDecks } from '../actions';
+import { fetchDecks, clearDecks, deleteDeck } from '../actions';
 
 class DeckList extends Component {
-  state = {
-    decks: []
-  }
-
   componentDidMount() {
     this.props.fetchDecks();
   }
@@ -36,31 +32,17 @@ class DeckList extends Component {
   }
 
   clearDecks = () => {
-    clearDecks();
+    this.props.clearDecks();
+  }
+
+  deleteDeck = (deckKey) => {
+    this.props.deleteDeck(deckKey);
   }
 
   render() {
     const columns = 2;
     return (
       <View>
-        {this.state.decks.length > 0
-          &&  <FlatList
-                data={this.createRows(this.state.decks, columns)}
-                keyExtractor={(item, index) => index.toString()}
-                numColumns={columns}
-                renderItem={({ item }) => (
-                  item.empty 
-                    ? <View style={[styles.item, styles.itemEmpty]} />
-                    : <TouchableOpacity 
-                        style={styles.item}
-                        onPress={() => this.props.navigation.navigate('Deck', deck={item})}>
-                        <Text>
-                          {item.title}
-                        </Text>
-                      </TouchableOpacity>
-                )}
-              />
-        }
         <TouchableOpacity 
           style={styles.item}
           onPress={() => this.clearDecks()}>
@@ -68,6 +50,32 @@ class DeckList extends Component {
             CLEAR
           </Text>
         </TouchableOpacity>
+        {this.props.decks && this.props.decks.length > 0
+          &&  <FlatList
+                data={this.createRows(this.props.decks, columns)}
+                keyExtractor={(item, index) => index.toString()}
+                numColumns={columns}
+                renderItem={({ item }) => (
+                  item.empty 
+                    ? <View style={[styles.item, styles.itemEmpty]} />
+                    : <View style={styles.item}>
+                        <TouchableOpacity 
+                          onPress={() => this.props.navigation.navigate('Deck', deck={item})}>
+                          <Text>
+                            {item.title}
+                          </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          onPress={() => this.deleteDeck.bind(this, item.key)}>
+                          <Text>
+                            DELETE DECK
+                          </Text>
+                        </TouchableOpacity>
+                      </View>
+                )}
+              />
+        }
+        
       </View>
     )
   }
@@ -93,11 +101,13 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
-  // decks: state.
+  decks: state && state.decks && Object.values(state.decks)
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchDecks: () => dispatch(fetchDecks())
+  fetchDecks: () => dispatch(fetchDecks()),
+  clearDecks: () => dispatch(clearDecks()),
+  deleteDeck: () => dispatch(deleteDeck())
 })
 
-export default connect(null, mapDispatchToProps)(DeckList);
+export default connect(mapStateToProps, mapDispatchToProps)(DeckList);

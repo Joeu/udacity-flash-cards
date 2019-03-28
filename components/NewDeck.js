@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, Platform, TouchableOpacity } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { createDeck, fetchDecksResults } from '../utils/api';
+import { connect } from 'react-redux';
+import { addDeckSuccess } from '../actions/index';
 
 class NewDeck extends Component {
   constructor(props) {
@@ -19,6 +21,10 @@ class NewDeck extends Component {
       title: this.state.title,
       cards: []
     }
+
+    this.props.addDeck({
+      [key]: deck
+    });
 
     createDeck({ key, deck });
 
@@ -66,4 +72,8 @@ const styles = StyleSheet.create({
   }
 });
 
-export default NewDeck;
+const mapDispatchToProps = (dispatch) => ({
+  addDeck: (deck) => dispatch(addDeckSuccess(deck))
+})
+
+export default connect(null, mapDispatchToProps)(NewDeck);
