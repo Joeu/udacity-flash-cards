@@ -39,7 +39,6 @@ export const addDeck = (deck) => {
     dispatch(addDeckBegin(deck));
     return apiService.createDeck(deck)
       .then(response => {
-        console.log(response);
         dispatch(addDeckSuccess(response));
       })
       .catch(error => 
@@ -102,13 +101,13 @@ export const clearDecksError = (error) => {
   }
 }
 
-export const deleteDeck = () => {
+export const deleteDeck = (deckKey) => {
   return dispatch => {
-    dispatch(deleteDeckBegin());
+    dispatch(deleteDeckBegin(deckKey));
     return apiService.deleteDeck(deckKey)
       .then(() => {
-        dispatch(deleteDeckSuccess());
-        return {};
+        dispatch(deleteDeckSuccess(deckKey));
+        // return {};
       })
       .catch(error => 
         dispatch(deleteDeckError(error)
@@ -124,7 +123,7 @@ export const deleteDeckBegin = (deckKey) => {
   }
 }
 
-export const deleteDeckSuccess = () => {
+export const deleteDeckSuccess = (deckKey) => {
   return {
     type: types.DELETE_DECK_SUCCESS,
     key: deckKey

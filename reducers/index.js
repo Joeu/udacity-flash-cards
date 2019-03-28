@@ -48,8 +48,10 @@ const decksReducer = (state = {}, action) => {
         ...state
       }
     case types.DELETE_DECK_SUCCESS:
+      let _remainingDecks = Object.values(state.decks).filter(deck => deck.title !== action.key);
       return {
         ...state,
+        decks: _remainingDecks
       }
     case types.DELETE_DECK_ERROR:
       return{

@@ -36,6 +36,7 @@ class DeckList extends Component {
   }
 
   deleteDeck = (deckKey) => {
+    console.log("DECKLIST: ", deckKey);
     this.props.deleteDeck(deckKey);
   }
 
@@ -66,7 +67,7 @@ class DeckList extends Component {
                           </Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                          onPress={() => this.deleteDeck.bind(this, item.key)}>
+                          onPress={() => this.deleteDeck(item.title)}>
                           <Text>
                             DELETE DECK
                           </Text>
@@ -107,7 +108,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchDecks: () => dispatch(fetchDecks()),
   clearDecks: () => dispatch(clearDecks()),
-  deleteDeck: () => dispatch(deleteDeck())
+  deleteDeck: (deckKey) => dispatch(deleteDeck(deckKey))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(DeckList);
