@@ -10,7 +10,7 @@ class Deck extends Component {
     return {
       title: deckTitle,
       headerRight: (
-        <TouchableOpacity onPress={() => navigation.navigate('NewCard')}>
+        <TouchableOpacity onPress={() => navigation.navigate('NewCard', {deckKey: deckTitle})}>
           <FontAwesome name='comment' style={styles.newCardButton} />
         </TouchableOpacity>
       )

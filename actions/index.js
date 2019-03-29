@@ -136,3 +136,18 @@ export const deleteDeckError = (error) => {
     error
   }
 }
+
+// export const addCardToDeck = (deckKey, card) => {
+//   return dispatch => {
+//     dispatch(addCardToDeckBegin());
+//     return api
+//   }
+// }
+
+export const addCardToDeckSuccess = (deck, card) => {
+  return {
+    type: types.ADD_CARD_SUCCESS,
+    deck,
+    card
+  }
+}

@@ -28,7 +28,6 @@ const decksReducer = (state = {}, action) => {
     //   return{
     //     ...state,
     //   }
-
     case types.CLEAR_DECKS_BEGIN:
       return {
         ...state
@@ -57,6 +56,28 @@ const decksReducer = (state = {}, action) => {
       return{
         ...state,
       }
+
+    case types.ADD_CARD_BEGIN:
+      return {
+        ...state
+      }
+    case types.ADD_CARD_SUCCESS:
+      return {
+        ...state,
+        decks: {
+          ...state.decks,
+          [action.deck.title]: {
+            ...state.decks[action.deck.title],
+            cards: [...state.decks[action.deck.title].cards, action.card]
+          }
+        }
+      }
+    case types.ADD_CARD_ERROR:
+      return{
+        ...state,
+      }
+
+
     default:
       return state
   }
