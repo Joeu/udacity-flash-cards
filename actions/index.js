@@ -1,5 +1,8 @@
 import * as types from '../types/deckTypes';
 import * as apiService from '../utils/api';
+import { AsyncStorage } from 'react-native';
+import { DECKS_STORAGE_KEY } from '../utils/constants';
+
 
 export const fetchDecks = () => {
   return dispatch => {
@@ -37,13 +40,12 @@ export const fetchDecksError = (error) => {
 export const addDeck = (deck) => {
   return dispatch => {
     dispatch(addDeckBegin(deck));
-    return apiService.createDeck(deck)
-      .then(response => {
-        dispatch(addDeckSuccess(response));
-      })
-      .catch(error => 
-        dispatch(addDeckError(error)
-      ));
+    return AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify({
+      [deck.key]: deck.deck
+    }), (error) => {
+      if (error) dispatch(addDeckError(error))
+      else dispatch(addDeckSuccess(deck));
+    });
   }
 }
 
@@ -107,7 +109,6 @@ export const deleteDeck = (deckKey) => {
     return apiService.deleteDeck(deckKey)
       .then(() => {
         dispatch(deleteDeckSuccess(deckKey));
-        // return {};
       })
       .catch(error => 
         dispatch(deleteDeckError(error)

@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Platform, TouchableOpacity } from 'react-native
 import { TextInput } from 'react-native-gesture-handler';
 import { createDeck, fetchDecksResults } from '../utils/api';
 import { connect } from 'react-redux';
-import { addDeckSuccess } from '../actions/index';
+import { addDeckSuccess, addDeck } from '../actions/index';
 
 class NewDeck extends Component {
   constructor(props) {
