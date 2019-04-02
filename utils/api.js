@@ -5,6 +5,7 @@ export const fetchDecksResults = async() => {
   try {
     const decks = await AsyncStorage.getItem(DECKS_STORAGE_KEY);
     if (decks !== null) {
+      console.log(decks);
       return JSON.parse(decks);
     } 
   } catch(error) {

@@ -15,19 +15,21 @@ const decksReducer = (state = {}, action) => {
       return{
         ...state,
       }
-    // case types.ADD_DECK_BEGIN:
-    //   return {
-    //     ...state
-    //   }
+
+    case types.ADD_DECK_BEGIN:
+      return {
+        ...state
+      }
     case types.ADD_DECK_SUCCESS:
       return {
         ...state,
         decks: {...state.decks, ...action.deck}
       }
-    // case types.ADD_DECK_ERROR:
-    //   return{
-    //     ...state,
-    //   }
+    case types.ADD_DECK_ERROR:
+      return{
+        ...state,
+      }
+      
     case types.CLEAR_DECKS_BEGIN:
       return {
         ...state

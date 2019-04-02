@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Platform, TouchableOpacity } from 'react-native
 import { TextInput } from 'react-native-gesture-handler';
 import { createDeck, fetchDecksResults } from '../utils/api';
 import { connect } from 'react-redux';
-import { addDeckSuccess, addDeck } from '../actions/index';
+import { addDeckSuccess, addDeckError } from '../actions/index';
 
 class NewDeck extends Component {
   constructor(props) {
@@ -22,11 +22,11 @@ class NewDeck extends Component {
       cards: []
     }
 
-    this.props.addDeck({
-      [key]: deck
-    });
-
-    createDeck({ key, deck });
+    createDeck({ key, deck })
+      .then(this.props.addDeckSuccess({
+        [key]: deck
+      }))
+      .catch(error => this.props.addDeckError(error));
 
     this.toHome();
   }
@@ -73,7 +73,8 @@ const styles = StyleSheet.create({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  addDeck: (deck) => dispatch(addDeckSuccess(deck))
+  addDeckSuccess: (deck) => dispatch(addDeckSuccess(deck)),
+  addDeckError: (deck) => dispatch(addDeckError(deck))
 })
 
 export default connect(null, mapDispatchToProps)(NewDeck);
