@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Platform, TouchableOpacity } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
-import { createDeck, fetchDecksResults } from '../utils/api';
+import { createDeck } from '../utils/api';
 import { connect } from 'react-redux';
 import { addDeckSuccess, addDeckError } from '../actions/index';
 

@@ -41,7 +41,7 @@ class DeckList extends Component {
   }
 
   render() {
-    const columns = 2;
+    const columns = 1;
     return (
       <View>
         <TouchableOpacity 

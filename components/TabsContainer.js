@@ -2,6 +2,7 @@ import { createMaterialTopTabNavigator, createStackNavigator, createAppContainer
 import DeckList from './DeckList';
 import NewDeck from './NewDeck';
 import Deck from './Deck';
+import DeckInfo from './DeckInfo';
 import Card from './Card';
 import NewCard from './NewCard';
 import { Constants } from 'expo';
@@ -11,6 +12,12 @@ const DeckStack = createStackNavigator({
     screen: DeckList,
     navigationOptions: {
       header: null,
+    }
+  },
+  DeckInfo: {
+    screen: DeckInfo,
+    navigationOptions: {
+      headerForceInset: {top: 'never'}
     }
   },
   Deck: {

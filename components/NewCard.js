@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, Picker, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { TextInput } from 'react-native-gesture-handler';
-import { addCardToDeckSuccess } from '../actions/index';
+import { addCardToDeck } from '../utils/api';
+import { addCardToDeckSuccess, addCardToDeckError } from '../actions/index';
 
 class NewCard extends Component {
   constructor(props) {
@@ -15,7 +16,6 @@ class NewCard extends Component {
   }
 
   toDeck = () => {
-    // this.props.navigation.navigate('DeckList');
     this.props.navigation.navigate('DeckList');
   }
 
@@ -31,9 +31,9 @@ class NewCard extends Component {
       answer: this.state.answer
     };
 
-    this.props.addCardToDeck(deck, card);
-
-    // createDeck({ key, deck });
+    addCardToDeck(deck, card)
+      .then(this.props.addCardToDeckSuccess(deck, card))
+      .catch(error => this.props.addCardToDeckError(error));
 
     this.toDeck();
 
@@ -91,7 +91,8 @@ const styles = StyleSheet.create({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  addCardToDeck: (deck, card) => dispatch(addCardToDeckSuccess(deck, card))
+  addCardToDeckSuccess: (deck, card) => dispatch(addCardToDeckSuccess(deck, card)),
+  addCardToDeckError: (deck, card) => dispatch(addCardToDeckError(error))
 })
 
 export default connect(null, mapDispatchToProps)(NewCard);

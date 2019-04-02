@@ -152,3 +152,10 @@ export const addCardToDeckSuccess = (deck, card) => {
     card
   }
 }
+
+export const addCardToDeckError = (deck, card) => {
+  return {
+    type: types.ADD_CARD_ERROR,
+    error
+  }
+}
