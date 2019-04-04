@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
 
 const mapDispatchToProps = (dispatch) => ({
   addCardToDeckSuccess: (deck, card) => dispatch(addCardToDeckSuccess(deck, card)),
-  addCardToDeckError: (deck, card) => dispatch(addCardToDeckError(error))
+  addCardToDeckError: (error) => dispatch(addCardToDeckError(error))
 })
 
 export default connect(null, mapDispatchToProps)(NewCard);

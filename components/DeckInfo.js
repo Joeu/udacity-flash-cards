@@ -12,7 +12,7 @@ class Deck extends Component {
       title: `${deckTitle}'s info`,
       headerRight: (
         <TouchableOpacity onPress={() => navigation.navigate('NewCard', { deckKey: deckTitle })}>
-          <FontAwesome name='comment' style={styles.newCardButton} />
+          <FontAwesome name='comment' style={styles.textInfo} />
         </TouchableOpacity>
       )
     }
@@ -26,9 +26,14 @@ class Deck extends Component {
         {
           deck.cards && deck.cards.length > 0
           ? 
-            <Text style={styles.content}>
-              {deck.cards.length} - Cards
-            </Text>
+            <View style={styles.textInfo}>
+              <Text >
+                {deck.cards.length} - Cards
+              </Text>
+              <TouchableOpacity onPress={() => navigation.navigate('Deck', { deck: deck })}>
+                <FontAwesome name='play' style={styles.textInfo} />
+              </TouchableOpacity>
+            </View>
           : <EmptyDeck />
         }
       </View>
@@ -47,7 +52,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
   },
-  newCardButton: {
+  textInfo: {
     marginRight: 20,
     fontSize: 30
   }

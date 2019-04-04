@@ -7,7 +7,7 @@ import Swiper from 'react-native-swiper';
 
 class Deck extends Component {
   static navigationOptions = ({ navigation }) => {
-    const deckTitle = navigation.state.params.item.title;
+    const deckTitle = navigation.state.params.deck.title;
     return {
       title: deckTitle,
       headerRight: (
@@ -20,7 +20,7 @@ class Deck extends Component {
 
   render() {
     const { navigation } = this.props;
-    const deck = navigation.state.params.item;
+    const deck = navigation.state.params.deck;
     return (
       <View style={styles.container}>
         {
