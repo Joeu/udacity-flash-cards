@@ -46,3 +46,21 @@ export const addCardToDeck = async(deck, card) => {
       AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(data));
     })
 }
+
+export const setUserAnswer = async(deck, card, userGuess) => {
+  return AsyncStorage.getItem(DECKS_STORAGE_KEY)
+    .then((decks) => {
+      const data = JSON.parse(decks);
+      data[deck.title].cards = data[deck.title].cards.map((_card => {
+        if (card.question === _card.question) {
+          return {
+            ..._card,
+            userGuess: userGuess
+          }
+        } else {
+          return {..._card}
+        }
+      }))
+      AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(data));
+    })
+}

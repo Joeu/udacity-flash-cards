@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { FontAwesome, Entypo, MaterialIcons } from '@expo/vector-icons';
 import { View, Text, StyleSheet, Platform, TouchableOpacity, Animated } from 'react-native';
 import { connect } from 'react-redux';
-import { setUserGuessSuccess } from '../actions/index';
+import { setUserAnswer } from '../utils/api';
+import { setUserGuessSuccess, setUserGuessError } from '../actions/index';
 
 class Card extends Component {
 
@@ -46,7 +47,11 @@ class Card extends Component {
     this.setState({
       userGuess: answer
     });
-    this.props.setUserGuessSuccess(this.props.deck, this.props.item, answer);
+
+    setUserAnswer(this.props.deck, this.props.item, answer)
+      .then(this.props.setUserGuessSuccess(this.props.deck, this.props.item, answer))
+      .catch(error => this.props.setUserGuessError(error));
+    
   }
 
   _flipCard = () => {
@@ -191,7 +196,8 @@ const styles = StyleSheet.create({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setUserGuessSuccess: (deck, card, userGuess) => dispatch(setUserGuessSuccess(deck, card, userGuess))
+  setUserGuessSuccess: (deck, card, userGuess) => dispatch(setUserGuessSuccess(deck, card, userGuess)),
+  setUserGuessError: (error) => dispatch(setUserGuessError(error))
 })
 
 export default connect(null, mapDispatchToProps)(Card);
