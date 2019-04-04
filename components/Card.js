@@ -34,23 +34,19 @@ class Card extends Component {
     });
   }
 
-  _checkIfAnswerIsCorrect = (answer) => {
-    const _correct = this.props.item.answer.toLowerCase() === answer.toLowerCase()
-      ? '#3CB371'
-      : '#D2691E';
-    this._setSelectedAnswer(answer);
-    this.setState({cardBGColor: _correct});
-    this.props.setUserGuessSuccess(this.props.deck, this.props.item, answer);
+  componentDidMount() {
+    let { answer, userGuess } = this.props.item;
+    this.setState({
+      answer, userGuess
+    });
   }
 
-  _setSelectedAnswer = (buttonValue) => {
-    const buttonBGColor = this.props.item.userGuess && this.props.item.userGuess.toLowerCase() === buttonValue.toLowerCase()
-      ? 'lightblue'
-      : 'black';
-
-    console.log("buttonBGColor");
-    console.log(buttonBGColor);
-    return buttonBGColor;
+  _checkIfAnswerIsCorrect = (answer) => {
+    const _correct = this.props.item.answer.toLowerCase() === answer.toLowerCase();
+    this.setState({
+      userGuess: answer
+    });
+    this.props.setUserGuessSuccess(this.props.deck, this.props.item, answer);
   }
 
   _flipCard = () => {
@@ -60,14 +56,12 @@ class Card extends Component {
         friction: 8,
         tension: 10
       }).start();
-
     } else {
       Animated.spring(this.animatedValue, {
         toValue: 180,
         friction: 8,
         tension: 10
       }).start();
-      
     }
   }
 
@@ -77,7 +71,6 @@ class Card extends Component {
         {rotateY: this.fronInterpolate}
       ]
     }
-
     const backAnimatedStyle = {
       transform: [
         {rotateY: this.backInterpolate}
@@ -108,14 +101,26 @@ class Card extends Component {
             <TouchableOpacity 
               style={[styles.btn, {flex: 1}]} 
               onPress={() => this._checkIfAnswerIsCorrect('yes')}>
-              <FontAwesome style={styles.answerText} name='check-circle' color={this._setSelectedAnswer('yes')} />
+              <FontAwesome 
+                style={styles.answerText} 
+                name='check-circle' 
+              />
             </TouchableOpacity>
             <TouchableOpacity 
               style={[styles.btn, {flex: 1}]} 
               onPress={() => this._checkIfAnswerIsCorrect('no')}>
-              <FontAwesome style={styles.answerText} name='times-circle' color={this._setSelectedAnswer('no')} />
+              <FontAwesome 
+                style={styles.answerText} 
+                name='times-circle' 
+              />
             </TouchableOpacity>
           </View>
+          {this.state.userGuess
+            &&
+            <View style={styles.box}>
+              <Text>Current Answer: {this.state.userGuess.toUpperCase()}</Text>
+            </View>
+          }
         </Animated.View>
 
         <Animated.View style={[

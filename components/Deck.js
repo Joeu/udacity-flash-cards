@@ -27,7 +27,10 @@ class Deck extends Component {
           deck.cards && deck.cards.length > 0
           ? 
             <View style={styles.content}>
-              <Swiper showsButtons={false}>
+              <Swiper 
+                showsButtons={false}
+                showsPagination={true}
+              >
               {deck.cards.map((card) => {
                 return (
                   <View style={styles.content} key={card.key}>

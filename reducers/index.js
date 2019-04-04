@@ -96,6 +96,8 @@ const decksReducer = (state = {}, action) => {
                   ...card,
                   userGuess: action.userGuess
                 }
+              } else {
+                return {...card}
               }
             }))
           }
