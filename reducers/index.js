@@ -79,6 +79,33 @@ const decksReducer = (state = {}, action) => {
         ...state,
       }
 
+    case types.SET_USER_GUESS_BEGIN:
+      return {
+        ...state
+      }
+    case types.SET_USER_GUESS_SUCCESS:
+      return {
+        ...state,
+        decks: {
+          ...state.decks,
+          [action.deck.title]: {
+            ...state.decks[action.deck.title],
+            cards: state.decks[action.deck.title].cards.map((card => {
+              if (card.question === action.card.question) {
+                return {
+                  ...card,
+                  userGuess: action.userGuess
+                }
+              }
+            }))
+          }
+        }
+      }
+    case types.SET_USER_GUESS_ERROR:
+      return {
+        ...state,
+        error
+      }
 
     default:
       return state

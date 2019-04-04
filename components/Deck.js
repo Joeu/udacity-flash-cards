@@ -31,7 +31,7 @@ class Deck extends Component {
               {deck.cards.map((card) => {
                 return (
                   <View style={styles.content} key={card.key}>
-                    <Card item={card} />
+                    <Card item={card} deck={deck} />
                   </View>
                 )})}
               </Swiper>

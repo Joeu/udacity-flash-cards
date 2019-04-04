@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { FontAwesome, Entypo, MaterialIcons } from '@expo/vector-icons';
 import { View, Text, StyleSheet, Platform, TouchableOpacity, Animated } from 'react-native';
+import { connect } from 'react-redux';
+import { setUserGuessSuccess } from '../actions/index';
 
 class Card extends Component {
 
   state = {
-    cardBGColor: '#ebeef0'
+    cardBGColor: '#ebeef0',
   }
 
   componentWillMount() {
@@ -36,7 +38,19 @@ class Card extends Component {
     const _correct = this.props.item.answer.toLowerCase() === answer.toLowerCase()
       ? '#3CB371'
       : '#D2691E';
+    this._setSelectedAnswer(answer);
     this.setState({cardBGColor: _correct});
+    this.props.setUserGuessSuccess(this.props.deck, this.props.item, answer);
+  }
+
+  _setSelectedAnswer = (buttonValue) => {
+    const buttonBGColor = this.props.item.userGuess && this.props.item.userGuess.toLowerCase() === buttonValue.toLowerCase()
+      ? 'lightblue'
+      : 'black';
+
+    console.log("buttonBGColor");
+    console.log(buttonBGColor);
+    return buttonBGColor;
   }
 
   _flipCard = () => {
@@ -94,12 +108,12 @@ class Card extends Component {
             <TouchableOpacity 
               style={[styles.btn, {flex: 1}]} 
               onPress={() => this._checkIfAnswerIsCorrect('yes')}>
-              <FontAwesome style={styles.answerText} name='check-circle' />
+              <FontAwesome style={styles.answerText} name='check-circle' color={this._setSelectedAnswer('yes')} />
             </TouchableOpacity>
             <TouchableOpacity 
               style={[styles.btn, {flex: 1}]} 
               onPress={() => this._checkIfAnswerIsCorrect('no')}>
-              <FontAwesome style={styles.answerText} name='times-circle' />
+              <FontAwesome style={styles.answerText} name='times-circle' color={this._setSelectedAnswer('no')} />
             </TouchableOpacity>
           </View>
         </Animated.View>
@@ -171,4 +185,8 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Card;
+const mapDispatchToProps = (dispatch) => ({
+  setUserGuessSuccess: (deck, card, userGuess) => dispatch(setUserGuessSuccess(deck, card, userGuess))
+})
+
+export default connect(null, mapDispatchToProps)(Card);

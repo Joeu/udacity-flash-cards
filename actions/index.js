@@ -159,3 +159,31 @@ export const addCardToDeckError = (deck, card) => {
     error
   }
 }
+
+export const setUserGuess = (deck, card, answer) => {
+
+}
+
+export const setUserGuessBegin = () => {
+  return {
+    type: types.SET_USER_GUESS_BEGIN,
+    deck,
+    card
+  }
+}
+
+export const setUserGuessSuccess = (deck, card, userGuess) => {
+  return {
+    type: types.SET_USER_GUESS_SUCCESS,
+    deck,
+    card,
+    userGuess
+  }
+}
+
+export const setUserGuessError = (deck, card) => {
+  return {
+    type: types.ADD_CARD_ERROR,
+    error
+  }
+}

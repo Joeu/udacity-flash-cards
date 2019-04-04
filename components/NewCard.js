@@ -11,7 +11,8 @@ class NewCard extends Component {
     
     this.state = {
       question: 'Question',
-      answer: 'yes'
+      answer: 'yes',
+      userGuess: null
     };
   }
 
@@ -28,7 +29,8 @@ class NewCard extends Component {
     const card = {
       key: this.state.question,
       question: this.state.question,
-      answer: this.state.answer
+      answer: this.state.answer,
+      userGuess: this.state.userGuess
     };
 
     addCardToDeck(deck, card)
