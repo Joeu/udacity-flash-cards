@@ -5,6 +5,7 @@ import Deck from './Deck';
 import DeckInfo from './DeckInfo';
 import Card from './Card';
 import NewCard from './NewCard';
+import Score from './Score';
 import { Constants } from 'expo';
 
 const DeckStack = createStackNavigator({
@@ -37,6 +38,12 @@ const DeckStack = createStackNavigator({
     screen: NewCard,
     navigationOptions: {
       title: 'New Card',
+      headerForceInset: {top: 'never'}
+    }
+  },
+  Score: {
+    screen: Score,
+    navigationOptions: {
       headerForceInset: {top: 'never'}
     }
   }

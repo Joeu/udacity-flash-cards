@@ -18,9 +18,36 @@ class Deck extends Component {
     }
   };
 
+  _swipeTo = () => {
+    let { index, total } = this.refs.swiper.state;
+    if (index + 1 < total){
+      this.refs.swiper.scrollBy(1);
+    } else {
+      index = total - 1;
+    }
+  }
+
   render() {
+    const renderPagination = (index, total, context) => {
+      return (
+        <View style={styles.paginationStyle}>
+          <Text style={[styles.paginationText, { color: 'black' }]}>
+            {index + 1}/{total}
+          </Text>
+          {index + 1 === total
+            &&  
+              <View>
+                <TouchableOpacity onPress={() => navigation.navigate('Score')}>
+                  <Text>View Score</Text>           
+                </TouchableOpacity>
+              </View>
+          }
+        </View>
+      )
+    }
     const { navigation } = this.props;
     const deck = navigation.state.params.deck;
+    this.swiper = undefined;
     return (
       <View style={styles.container}>
         {
@@ -28,13 +55,19 @@ class Deck extends Component {
           ? 
             <View style={styles.content}>
               <Swiper 
+                ref='swiper'
                 showsButtons={false}
                 showsPagination={true}
+                renderPagination={renderPagination}
+                loop={false}
               >
               {deck.cards.map((card) => {
                 return (
                   <View style={styles.content} key={card.key}>
-                    <Card item={card} deck={deck} />
+                    <Card 
+                      swipeTo={this._swipeTo}
+                      item={card} 
+                      deck={deck} />
                   </View>
                 )})}
               </Swiper>
@@ -60,6 +93,15 @@ const styles = StyleSheet.create({
   newCardButton: {
     marginRight: 20,
     fontSize: 30
+  },
+  paginationStyle: {
+    position: 'absolute',
+    bottom: 10,
+    right: 10
+  },
+  paginationText: {
+    color: 'white',
+    fontSize: 20
   }
 });
 

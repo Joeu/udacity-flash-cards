@@ -52,6 +52,7 @@ class Card extends Component {
       .then(this.props.setUserGuessSuccess(this.props.deck, this.props.item, answer))
       .catch(error => this.props.setUserGuessError(error));
     
+    this.props.swipeTo();
   }
 
   _flipCard = () => {
