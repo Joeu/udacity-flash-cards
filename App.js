@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 import reducer from './reducers';
 import { logger } from './middlewares';
 import thunkMiddleware from "redux-thunk";
+import { setLocalNotification, clearLocalNotification } from './utils/notificationHandler';
 
 
 function UdaciStatusBar({backgroundColor, ...props}) {
@@ -18,6 +19,11 @@ function UdaciStatusBar({backgroundColor, ...props}) {
 }
 
 export default class App extends Component {
+  componentDidMount() {
+    clearLocalNotification()
+      .then(setLocalNotification);
+  }
+
   render() {
     return (
       <Provider store={createStore(reducer, applyMiddleware(

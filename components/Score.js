@@ -1,23 +1,29 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Picker, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-import { TextInput } from 'react-native-gesture-handler';
-import { addCardToDeck } from '../utils/api';
-import { addCardToDeckSuccess, addCardToDeckError } from '../actions/index';
 
 class Score extends Component {
-  
   render() {
     const { navigation } = this.props;
+    const { deck, index, total } = navigation.state.params;
+    const _percentage = parseFloat(index / total).toFixed(2) * 100;
+
     return (
       <View>
-        <Text style={styles.text}>Score</Text>
+        <Text style={styles.text}>You achieved {}</Text>
+        <Text style={styles.text}>Score: {_percentage} %</Text>
         <TouchableOpacity 
           style={styles.button}
           onPress={() => navigation.navigate('DeckList')}>
           <Text>GO HOME</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity 
+          style={styles.button}
+          onPress={() => navigation.navigate(
+            'Deck', 
+            { 
+              deck: deck 
+            })}>
           <Text>RESET</Text>
         </TouchableOpacity>
       </View>
@@ -49,8 +55,4 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapStateToProps = (state) => ({
-  decks: state.decks
-})
-
-export default connect(mapStateToProps)(Score);
+export default connect()(Score);

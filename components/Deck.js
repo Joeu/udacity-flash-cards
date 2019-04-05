@@ -18,7 +18,7 @@ class Deck extends Component {
     }
   };
 
-  _swipeTo = () => {
+  _swipeToNext = () => {
     let { index, total } = this.refs.swiper.state;
     if (index + 1 < total){
       this.refs.swiper.scrollBy(1);
@@ -28,6 +28,9 @@ class Deck extends Component {
   }
 
   render() {
+    const { navigation } = this.props;
+    const deck = navigation.state.params.deck;
+    this.swiper = undefined;
     const renderPagination = (index, total, context) => {
       return (
         <View style={styles.paginationStyle}>
@@ -37,7 +40,14 @@ class Deck extends Component {
           {index + 1 === total
             &&  
               <View>
-                <TouchableOpacity onPress={() => navigation.navigate('Score')}>
+                <TouchableOpacity onPress={() => navigation.navigate(
+                    'Score', 
+                    { 
+                      deck,
+                      index,
+                      total
+                    }
+                )}>
                   <Text>View Score</Text>           
                 </TouchableOpacity>
               </View>
@@ -45,9 +55,6 @@ class Deck extends Component {
         </View>
       )
     }
-    const { navigation } = this.props;
-    const deck = navigation.state.params.deck;
-    this.swiper = undefined;
     return (
       <View style={styles.container}>
         {
@@ -65,7 +72,7 @@ class Deck extends Component {
                 return (
                   <View style={styles.content} key={card.key}>
                     <Card 
-                      swipeTo={this._swipeTo}
+                      swipeToNext={this._swipeToNext}
                       item={card} 
                       deck={deck} />
                   </View>
