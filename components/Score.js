@@ -4,14 +4,17 @@ import { connect } from 'react-redux';
 
 class Score extends Component {
   render() {
+
+    console.log("SCORE")
+    console.log(this.props);
     const { navigation } = this.props;
-    const { deck, index, total } = navigation.state.params;
-    const _percentage = parseFloat(index / total).toFixed(2) * 100;
+    const { deck, qtdCorrect, total } = navigation.state.params;
+    const _percentage = parseFloat(qtdCorrect / total).toFixed(2) * 100;
 
     return (
       <View>
-        <Text style={styles.text}>You achieved {}</Text>
-        <Text style={styles.text}>Score: {_percentage} %</Text>
+        <Text style={styles.text}>You got {_percentage}%</Text>
+        <Text style={styles.text}>of correct aswers!!</Text>
         <TouchableOpacity 
           style={styles.button}
           onPress={() => navigation.navigate('DeckList')}>

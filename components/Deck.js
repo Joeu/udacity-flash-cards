@@ -30,7 +30,8 @@ class Deck extends Component {
 
   render() {
     const { navigation } = this.props;
-    const deck = navigation.state.params.deck;
+    let deck = navigation.state.params.deck;
+    let { qtdAndswers, qtdCorrect } = this.props.metaData;
     this.swiper = undefined;
 
     console.log("PROPS");
@@ -42,14 +43,14 @@ class Deck extends Component {
           <Text style={[styles.paginationText, { color: 'black' }]}>
             {index + 1}/{total}
           </Text>
-          {this.props.qtdAnswers === total
+          {qtdAndswers === total
             &&  
               <View>
                 <TouchableOpacity onPress={() => navigation.navigate(
                     'Score', 
                     { 
                       deck,
-                      index,
+                      qtdCorrect,
                       total
                     }
                 )}>
@@ -117,11 +118,28 @@ const styles = StyleSheet.create({
   }
 });
 
+const _getDeckMetaData = (state, ownProps) => {
+  let data = {
+    qtdAndswers: 0,
+    qtdCorrect: 0
+  }
+  state.decks[ownProps.navigation.state.params.deck.title].cards.map(
+    card => {
+      if (card.answer === card.userGuess) {
+        data.qtdCorrect++
+      }
+      if (card.userGuess !== null){
+        data.qtdAndswers++
+      } 
+    }
+  )
+  
+  return data;
+}
+
 
 mapStateToProps = (state, ownProps) => ({
-  qtdAnswers: state.decks[ownProps.navigation.state.params.deck.title].cards.filter(
-    card => card.userGuess !== null
-  ).length
+  metaData: _getDeckMetaData(state, ownProps)
 });
 
 export default connect(mapStateToProps)(Deck);
