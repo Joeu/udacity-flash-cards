@@ -13,7 +13,10 @@ class Deck extends Component {
       title: deckTitle,
       headerRight: (
         <TouchableOpacity onPress={() => navigation.navigate('NewCard', { deckKey: deckTitle })}>
-          <FontAwesome name='comment' style={styles.newCardButton} />
+          <View style={styles.newCardView}>
+            <FontAwesome name='comment' style={styles.textInfo} />
+            <Text style={styles.cardSubtitle}>New card!</Text>
+          </View>
         </TouchableOpacity>
       )
     }
@@ -112,7 +115,23 @@ const styles = StyleSheet.create({
   paginationText: {
     color: 'white',
     fontSize: 20
-  }
+  },
+  newCardView: {
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+  },
+  textInfo: {
+    marginRight: 20,
+    fontSize: 30,
+  },
+  cardSubtitle: {
+    marginRight: 20,
+  },
+  playView: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 50
+  },
 });
 
 const _getDeckMetaData = (state, ownProps) => {
