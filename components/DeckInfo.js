@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { FontAwesome, Entypo } from '@expo/vector-icons';
-import { View, Text, Button, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
-import Card from './Card';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import EmptyDeck from './EmptyDeck';
-import Swiper from 'react-native-swiper';
 
 class Deck extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -26,13 +24,19 @@ class Deck extends Component {
         {
           deck.cards && deck.cards.length > 0
           ? 
-            <View style={styles.textInfo}>
-              <Text >
+            <View>
+              <Text style={styles.textTitle}>
+                {deck.title}
+              </Text>
+              <Text style={styles.textInfo}>
                 {deck.cards.length} - Cards
               </Text>
-              <TouchableOpacity onPress={() => navigation.navigate('Deck', { deck: deck })}>
-                <FontAwesome name='play' style={styles.textInfo} />
-              </TouchableOpacity>
+              <View style={styles.playView}>
+                <TouchableOpacity onPress={() => navigation.navigate('Deck', { deck: deck })}>
+                  <FontAwesome name='play-circle' style={styles.startBtn} />
+                  <Text>Start Quiz</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           : <EmptyDeck />
         }
@@ -46,15 +50,23 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f000',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
+    paddingTop: 40,
   },
-  content: {
-    flex: 1,
-    width: '100%',
-  },
+  textTitle: {
+    fontSize: 50
+  },  
   textInfo: {
     marginRight: 20,
-    fontSize: 30
+    fontSize: 30,
+  },
+  playView: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 50
+  },
+  startBtn: {
+    fontSize: 60
   }
 });
 

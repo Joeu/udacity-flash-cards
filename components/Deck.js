@@ -34,9 +34,6 @@ class Deck extends Component {
     let { qtdAndswers, qtdCorrect } = this.props.metaData;
     this.swiper = undefined;
 
-    console.log("PROPS");
-    console.log(this.props);
-
     const renderPagination = (index, total, context) => {
       return (
         <View style={styles.paginationStyle}>
@@ -125,12 +122,8 @@ const _getDeckMetaData = (state, ownProps) => {
   }
   state.decks[ownProps.navigation.state.params.deck.title].cards.map(
     card => {
-      if (card.answer === card.userGuess) {
-        data.qtdCorrect++
-      }
-      if (card.userGuess !== null){
-        data.qtdAndswers++
-      } 
+      card.answer === card.userGuess && data.qtdCorrect++;
+      card.userGuess !== null && data.qtdAndswers++;
     }
   )
   

@@ -4,9 +4,6 @@ import { connect } from 'react-redux';
 
 class Score extends Component {
   render() {
-
-    console.log("SCORE")
-    console.log(this.props);
     const { navigation } = this.props;
     const { deck, qtdCorrect, total } = navigation.state.params;
     const _percentage = parseFloat(qtdCorrect / total).toFixed(2) * 100;
@@ -25,9 +22,9 @@ class Score extends Component {
           onPress={() => navigation.navigate(
             'Deck', 
             { 
-              deck: deck 
+              deck: deck
             })}>
-          <Text>RESET</Text>
+          <Text>RESTART</Text>
         </TouchableOpacity>
       </View>
     )
