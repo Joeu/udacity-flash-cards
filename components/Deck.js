@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { FontAwesome, Entypo } from '@expo/vector-icons';
+import { connect } from 'react-redux';
 import { View, Text, Button, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
 import Card from './Card';
 import EmptyDeck from './EmptyDeck';
@@ -31,13 +32,17 @@ class Deck extends Component {
     const { navigation } = this.props;
     const deck = navigation.state.params.deck;
     this.swiper = undefined;
+
+    console.log("PROPS");
+    console.log(this.props);
+
     const renderPagination = (index, total, context) => {
       return (
         <View style={styles.paginationStyle}>
           <Text style={[styles.paginationText, { color: 'black' }]}>
             {index + 1}/{total}
           </Text>
-          {index + 1 === total
+          {this.props.qtdAnswers === total
             &&  
               <View>
                 <TouchableOpacity onPress={() => navigation.navigate(
@@ -113,4 +118,10 @@ const styles = StyleSheet.create({
 });
 
 
-export default Deck;
+mapStateToProps = (state, ownProps) => ({
+  qtdAnswers: state.decks[ownProps.navigation.state.params.deck.title].cards.filter(
+    card => card.userGuess !== null
+  ).length
+});
+
+export default connect(mapStateToProps)(Deck);
