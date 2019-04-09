@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { FontAwesome, Entypo } from '@expo/vector-icons';
+import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import EmptyDeck from './EmptyDeck';
+import NewCardHeader from './NewCardHeader';
 
 class Deck extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -9,12 +10,10 @@ class Deck extends Component {
     return {
       title: `${deckTitle}'s info`,
       headerRight: (
-        <TouchableOpacity onPress={() => navigation.navigate('NewCard', { deckKey: deckTitle })}>
-          <View style={styles.newCardView}>
-            <FontAwesome name='comment' style={styles.textInfo} />
-            <Text style={styles.cardSubtitle}>New card!</Text>
-          </View>
-        </TouchableOpacity>
+        <NewCardHeader 
+          navigation={navigation}
+          deckKey={deckTitle}
+        />
       )
     }
   };
@@ -56,19 +55,12 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     paddingTop: 40,
   },
-  newCardView: {
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-  },
   textTitle: {
     fontSize: 50
   },  
   textInfo: {
     marginRight: 20,
     fontSize: 30,
-  },
-  cardSubtitle: {
-    marginRight: 20,
   },
   playView: {
     alignItems: 'center',

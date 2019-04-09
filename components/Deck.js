@@ -5,6 +5,7 @@ import { View, Text, Button, StyleSheet, TouchableOpacity, FlatList } from 'reac
 import Card from './Card';
 import EmptyDeck from './EmptyDeck';
 import Swiper from 'react-native-swiper';
+import NewCardHeader from './NewCardHeader';
 
 class Deck extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -12,12 +13,10 @@ class Deck extends Component {
     return {
       title: deckTitle,
       headerRight: (
-        <TouchableOpacity onPress={() => navigation.navigate('NewCard', { deckKey: deckTitle })}>
-          <View style={styles.newCardView}>
-            <FontAwesome name='comment' style={styles.textInfo} />
-            <Text style={styles.cardSubtitle}>New card!</Text>
-          </View>
-        </TouchableOpacity>
+        <NewCardHeader 
+          navigation={navigation}
+          deckKey={deckTitle}
+        />
       )
     }
   };
@@ -103,10 +102,6 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
   },
-  newCardButton: {
-    marginRight: 20,
-    fontSize: 30
-  },
   paginationStyle: {
     position: 'absolute',
     bottom: 10,
@@ -115,23 +110,7 @@ const styles = StyleSheet.create({
   paginationText: {
     color: 'white',
     fontSize: 20
-  },
-  newCardView: {
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-  },
-  textInfo: {
-    marginRight: 20,
-    fontSize: 30,
-  },
-  cardSubtitle: {
-    marginRight: 20,
-  },
-  playView: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: 50
-  },
+  }
 });
 
 const _getDeckMetaData = (state, ownProps) => {

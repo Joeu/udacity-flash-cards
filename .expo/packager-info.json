@@ -1,9 +1,10 @@
 {
   "packagerPort": 19001,
-  "packagerPid": 18856,
+  "packagerPid": 8520,
   "expoServerNgrokUrl": "https://66-jvq.anonymous.udacity-flash-cards.exp.direct",
   "packagerNgrokUrl": "https://packager.66-jvq.anonymous.udacity-flash-cards.exp.direct",
-  "ngrokPid": 17928,
+  "ngrokPid": 4412,
   "devToolsPort": 19002,
-  "expoServerPort": 19000
+  "expoServerPort": 19000,
+  "webpackServerPort": null
 }

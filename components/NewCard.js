@@ -10,9 +10,10 @@ class NewCard extends Component {
     super(props);
     
     this.state = {
-      question: 'Question',
+      question: '',
       answer: 'yes',
-      userGuess: null
+      userGuess: null,
+      placeholder: 'Type here your question'
     };
   }
 
@@ -41,6 +42,15 @@ class NewCard extends Component {
 
   }
 
+  _clear = () => {
+    this.setState({
+      key: '',
+      question: '',
+      answer: 'yes',
+      userGuess: null
+    })
+  }
+
   render() {
     return (
       <View>
@@ -49,6 +59,7 @@ class NewCard extends Component {
           style={styles.input}
           onChangeText={(question) => this.setState({question})}
           value={this.state.question}
+          placeholder={this.state.placeholder}
         />
         <Text style={styles.text}>Answer</Text>
         <Picker

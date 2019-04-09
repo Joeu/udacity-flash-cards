@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   FlatList,
 } from 'react-native';
-import { FontAwesome, Entypo } from '@expo/vector-icons';
+import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 import { fetchDecks, clearDecks, deleteDeck } from '../actions';
 
 class DeckList extends Component {
@@ -39,16 +39,17 @@ class DeckList extends Component {
                       <TouchableOpacity style={styles.cardButtom}
                         onPress={() => this.props.navigation.navigate('DeckInfo', deck = { item })}>
                         <View>
-                          <FontAwesome style={styles.btnIcon} name='book' />
+                          <MaterialCommunityIcons style={styles.btnIcon} name='cards-outline' />
                         </View>
                         <View>
                           <Text style={styles.btnText}>{item.title}</Text>
                         </View>
                       </TouchableOpacity>
+                      <View style={styles.separator} />
                       <TouchableOpacity style={styles.deleteButton}
                         onPress={() => this.deleteDeck(item.title)}>
                         <View>
-                          <FontAwesome style={styles.btnIcon} name='trash' />
+                          <FontAwesome style={styles.deleteIcon} name='trash' />
                         </View>
                       </TouchableOpacity>
                   </View>
@@ -63,25 +64,36 @@ class DeckList extends Component {
 const styles = StyleSheet.create({
   cardButtom: {
     alignItems: 'center',
-    justifyContent: 'space-around',
+    justifyContent: 'flex-start',
     flexDirection: 'row',
-    borderWidth: 1,
     width: '70%',
-    height: 100
+    height: 100,
+    paddingLeft: 20
   },
   deleteButton: {
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 1,
     width: '30%',
     height: 100,
   },
+  separator: {
+    borderLeftWidth: 1,
+    borderLeftColor: '#FFA500',
+    height: 90
+  },
   btnText: {
     fontSize: 40,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    paddingLeft: 5,
+    color: 'slategray'
   },
   btnIcon: {
-    fontSize: 50
+    fontSize: 50,
+    color: 'royalblue'
+  },
+  deleteIcon: {
+    fontSize: 50,
+    color: 'orangered'
   },
   item: {
     alignItems: "center",
@@ -91,9 +103,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     margin: 4,
     flexBasis: 0,
-    borderRadius: 4,
-    borderWidth: 1,
-    borderColor: '#FFA500',
     height: 100
   },
 });
