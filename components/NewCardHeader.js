@@ -11,7 +11,7 @@ class NewCardHeader extends PureComponent {
           { deckKey: this.props.deckKey }
         )}>
         <View style={styles.newCardView}>
-          <MaterialCommunityIcons name='library-plus' style={styles.textInfo} />
+          <MaterialCommunityIcons name='library-plus' color='white' style={styles.textInfo} />
           <Text style={styles.cardSubtitle}>New card!</Text>
         </View>
       </TouchableOpacity>
@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
   },
   cardSubtitle: {
     marginRight: 20,
+    color: 'white'
   },
 });
 

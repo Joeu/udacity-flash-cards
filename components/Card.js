@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FontAwesome, Entypo, MaterialIcons } from '@expo/vector-icons';
+import { FontAwesome, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { View, Text, StyleSheet, Platform, TouchableOpacity, Animated } from 'react-native';
 import { connect } from 'react-redux';
 import { setUserAnswer } from '../utils/api';
@@ -8,13 +8,13 @@ import { setUserGuessSuccess, setUserGuessError } from '../actions/index';
 class Card extends Component {
 
   state = {
-    cardBGColor: '#ebeef0',
+    cardBGColor: 'transparent',
   }
 
   componentWillMount() {
     this.animatedValue = new Animated.Value(0);
     this.value = 0;
-    this.animatedValue.addListener(({value}) => {
+    this.animatedValue.addListener(({ value }) => {
       this.value = value;
     });
     this.fronInterpolate = this.animatedValue.interpolate({
@@ -51,12 +51,12 @@ class Card extends Component {
     setUserAnswer(this.props.deck, this.props.item, answer)
       .then(this.props.setUserGuessSuccess(this.props.deck, this.props.item, answer))
       .catch(error => this.props.setUserGuessError(error));
-    
+
     this.props.swipeToNext();
   }
 
   _flipCard = () => {
-    if (this.value >= 90){
+    if (this.value >= 90) {
       Animated.spring(this.animatedValue, {
         toValue: 0,
         friction: 8,
@@ -74,81 +74,77 @@ class Card extends Component {
   render() {
     const frontAnimatedStyle = {
       transform: [
-        {rotateY: this.fronInterpolate}
+        { rotateY: this.fronInterpolate }
       ]
     }
     const backAnimatedStyle = {
       transform: [
-        {rotateY: this.backInterpolate}
+        { rotateY: this.backInterpolate }
       ]
     }
-    
+
     return (
-      <View style={[styles.container, styles.box]}>
+      <View style={styles.box}>
 
-        <Animated.View style={[
-          styles.flipCard, 
-          frontAnimatedStyle, 
-          styles.box, 
-          {backgroundColor: this.state.cardBGColor},
-          {opacity: this.frontOpacity}]}>
-          <View style={styles.box}>
-            <Text style={styles.questionText}>{this.props.item.question}</Text>
-          </View>
-          <View style={[styles.box, styles.answerBox]}>
-            <TouchableOpacity 
-              style={[styles.btn, {flex: 1}]} 
-              onPress={() => this._flipCard()}>
-              <MaterialIcons style={styles.answerText} name='flip' />
-              <Text style={styles.revealText}>Reveal Answer</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={[styles.box, styles.answerBox]}>
-            <TouchableOpacity 
-              style={[styles.btn, {flex: 1}]} 
-              onPress={() => this._checkIfAnswerIsCorrect('yes')}>
-              <FontAwesome 
-                style={styles.answerText} 
-                name='check-circle' 
-              />
-            </TouchableOpacity>
-            <TouchableOpacity 
-              style={[styles.btn, {flex: 1}]} 
-              onPress={() => this._checkIfAnswerIsCorrect('no')}>
-              <FontAwesome 
-                style={styles.answerText} 
-                name='times-circle' 
-              />
-            </TouchableOpacity>
-          </View>
-          {this.state.userGuess
-            &&
+        <View style={[styles.container, styles.box]}>
+          <Animated.View style={[
+            styles.flipCard,
+            frontAnimatedStyle,
+            styles.box,
+            { backgroundColor: this.state.cardBGColor },
+            { opacity: this.frontOpacity }]}>
             <View style={styles.box}>
-              <Text>Current Answer: {this.state.userGuess.toUpperCase()}</Text>
+              <Text style={styles.questionText}>{this.props.item.question}</Text>
             </View>
-          }
-        </Animated.View>
 
-        <Animated.View style={[
-          styles.flipCard, 
-          styles.flipCardBack, 
-          backAnimatedStyle, 
-          styles.box, 
-          {backgroundColor: this.state.cardBGColor},
-          {opacity: this.backOpacity}]}>
-          <View style={[styles.box]}>
-            <Text style={styles.questionText}>{this.props.item.answer}</Text>
-          </View>
-          <View style={[styles.box, styles.answerBox]}>
-            <TouchableOpacity  
-              style={[styles.btn, {flex: 1}]} 
-              onPress={() => this._flipCard()}>
-              <MaterialIcons style={styles.answerText} name='flip' />
-              <Text style={styles.revealText}>Back to Question</Text>
-            </TouchableOpacity>
-          </View>
-        </Animated.View>
-        
+            <View style={[styles.box, styles.answerBox]}>
+              <TouchableOpacity
+                style={[styles.btn, { flex: 1 }]}
+                onPress={() => this._checkIfAnswerIsCorrect('yes')}>
+                <MaterialCommunityIcons
+                  style={styles.answerText}
+                  name='thumb-up-outline'
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.btn, { flex: 1 }]}
+                onPress={() => this._checkIfAnswerIsCorrect('no')}>
+                <MaterialCommunityIcons
+                  style={styles.answerText}
+                  name='thumb-down-outline'
+                />
+              </TouchableOpacity>
+            </View>
+            {this.state.userGuess
+              &&
+              <View style={styles.box}>
+                <Text>Current Answer: {this.state.userGuess.toUpperCase()}</Text>
+              </View>
+            }
+          </Animated.View>
+
+          <Animated.View style={[
+            styles.flipCard,
+            styles.flipCardBack,
+            backAnimatedStyle,
+            styles.backCard,
+            { backgroundColor: this.state.cardBGColor },
+            { opacity: this.backOpacity }]}>
+            <View>
+              <Text style={styles.questionText}>{this.props.item.answer.toUpperCase()}</Text>
+            </View>
+          </Animated.View>
+        </View>
+
+        <View style={[styles.box, styles.answerBox]}>
+          <TouchableOpacity
+            style={[styles.btn, { flex: 1 }]}
+            onPress={() => this._flipCard()}>
+            <MaterialIcons style={styles.answerText} name='flip' />
+            <Text style={styles.revealText}>Flip</Text>
+          </TouchableOpacity>
+        </View>
+
       </View>
     )
   }
@@ -163,8 +159,11 @@ const styles = StyleSheet.create({
   container: {
     marginLeft: 25,
     marginRight: 25,
-    marginTop: 80,
-    marginBottom: 80
+    marginTop: 30,
+    marginBottom: 10,
+    borderColor: 'orange',
+    borderWidth: 1,
+    borderRadius: 5
   },
   answerBox: {
     flexDirection: 'row'
@@ -183,8 +182,14 @@ const styles = StyleSheet.create({
   },
   answerText: {
     fontSize: 55,
-    justifyContent: 'center',
+    // justifyContent: 'center',
     textAlign: 'center'
+  },
+  backCard: {
+    flexDirection: 'column',
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   flipCard: {
     backfaceVisibility: 'hidden'

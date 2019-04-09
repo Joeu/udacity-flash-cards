@@ -35,7 +35,8 @@ class Deck extends Component {
               </Text>
               <View style={styles.playView}>
                 <TouchableOpacity onPress={() => navigation.navigate('Deck', { deck: deck })}>
-                  <FontAwesome name='play-circle' style={styles.startBtn} />
+                  {/* <FontAwesome name='play-circle' style={styles.startBtn} /> */}
+                  <MaterialCommunityIcons style={styles.startBtn} name='cards-playing-outline' />
                   <Text>Start Quiz</Text>
                 </TouchableOpacity>
               </View>
@@ -56,7 +57,8 @@ const styles = StyleSheet.create({
     paddingTop: 40,
   },
   textTitle: {
-    fontSize: 50
+    fontSize: 50,
+    color: 'slategray'
   },  
   textInfo: {
     marginRight: 20,
@@ -68,7 +70,8 @@ const styles = StyleSheet.create({
     paddingTop: 50
   },
   startBtn: {
-    fontSize: 60
+    fontSize: 60,
+    color: 'lightseagreen'
   }
 });
 

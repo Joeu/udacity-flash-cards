@@ -6,7 +6,6 @@ import DeckInfo from './DeckInfo';
 import Card from './Card';
 import NewCard from './NewCard';
 import Score from './Score';
-import { Constants } from 'expo';
 
 const DeckStack = createStackNavigator({
   DeckList: {
@@ -18,27 +17,27 @@ const DeckStack = createStackNavigator({
   DeckInfo: {
     screen: DeckInfo,
     navigationOptions: {
-      headerForceInset: {top: 'never'}
+      headerForceInset: {top: 'never'},
     }
   },
   Deck: {
     screen: Deck,
     navigationOptions: {
-      headerForceInset: {top: 'never'}
+      headerForceInset: {top: 'never'},
     }
   },
   Card: {
     screen: Card,
     navigationOptions: {
       title: 'Card',
-      headerForceInset: {top: 'never'}
+      headerForceInset: {top: 'never'},
     }
   },
   NewCard: {
     screen: NewCard,
     navigationOptions: {
       title: 'New Card',
-      headerForceInset: {top: 'never'}
+      headerForceInset: {top: 'never'},
     }
   },
   Score: {
@@ -47,7 +46,16 @@ const DeckStack = createStackNavigator({
       headerForceInset: {top: 'never'}
     }
   }
-});
+},
+{
+  defaultNavigationOptions: {
+    headerTintColor: '#fff',
+    headerStyle: {
+      backgroundColor: 'dodgerblue',
+    }
+  }
+}
+);
 
 DeckStack.navigationOptions = ({ navigation }) => {
   let tabBarVisible = true;
@@ -57,13 +65,13 @@ DeckStack.navigationOptions = ({ navigation }) => {
 
   return {
     tabBarVisible,
-    swipeEnabled: false
+    swipeEnabled: false,
   };
 };
 
 const TabNavigator = createMaterialTopTabNavigator({
   Decks: DeckStack,
-  NewDeck: NewDeck
+  NewDeck: NewDeck,
 });
 
 export default createAppContainer(TabNavigator);
