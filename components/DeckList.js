@@ -20,7 +20,6 @@ class DeckList extends Component {
   }
 
   deleteDeck = (deckKey) => {
-    console.log("DECKLIST: ", deckKey);
     this.props.deleteDeck(deckKey);
   }
 

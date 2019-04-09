@@ -5,11 +5,6 @@ import { connect } from 'react-redux';
 import { setLocalNotification, clearLocalNotification } from '../utils/notificationHandler';
 
 class Score extends Component {
-  componentDidMount() {
-    clearLocalNotification()
-      .then(setLocalNotification);
-  }
-
   render() {
     const { navigation } = this.props;
     const { deck, qtdCorrect, total } = navigation.state.params;

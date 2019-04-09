@@ -3,17 +3,17 @@ import * as apiService from '../utils/api';
 import { AsyncStorage } from 'react-native';
 import { DECKS_STORAGE_KEY } from '../utils/constants';
 
-
 export const fetchDecks = () => {
-  return dispatch => {
+  return async dispatch => {
     dispatch(fetchDecksBegin());
-    return apiService.fetchDecksResults()
-      .then(response => {
-        dispatch(fetchDecksSuccess(response));
-        return response;
-      }).catch(error => 
-        dispatch(fetchDecksError(error)
-      ));
+    try {
+      const response = await apiService.fetchDecksResults();
+      dispatch(fetchDecksSuccess(response));
+      return response;
+    }
+    catch (error) {
+      return dispatch(fetchDecksError(error));
+    }
   }
 }
 
@@ -38,14 +38,17 @@ export const fetchDecksError = (error) => {
 }
 
 export const addDeck = (deck) => {
-  return dispatch => {
+  return async dispatch => {
     dispatch(addDeckBegin(deck));
-    return AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify({
-      [deck.key]: deck.deck
-    }), (error) => {
-      if (error) dispatch(addDeckError(error))
-      else dispatch(addDeckSuccess(deck));
-    });
+    try{
+      AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify({
+        [deck.key]: deck.deck
+      })).then(
+        dispatch(addDeckSuccess(deck))
+      );
+    } catch (error) {
+      dispatch(addDeckError(error));
+    }
   }
 }
 
@@ -71,17 +74,17 @@ export const addDeckError = (error) => {
 }
 
 export const clearDecks = () => {
-  return dispatch => {
+  return async dispatch => {
     dispatch(clearDecksBegin());
-    return apiService.clearDecks()
-      .then(() => {
-        dispatch(clearDecksSuccess());
-        return {};
-      })
-      .catch(error => 
-        dispatch(clearDecksError(error)
-      ));
-  } 
+    try {
+      await apiService.clearDecks();
+      dispatch(clearDecksSuccess());
+      return {};
+    }
+    catch (error) {
+      return dispatch(clearDecksError(error));
+    }
+  }
 }
 
 export const clearDecksBegin = () => {
@@ -104,20 +107,19 @@ export const clearDecksError = (error) => {
 }
 
 export const deleteDeck = (deckKey) => {
-  return dispatch => {
-    dispatch(deleteDeckBegin(deckKey));
-    return apiService.deleteDeck(deckKey)
-      .then(() => {
-        dispatch(deleteDeckSuccess(deckKey));
-      })
-      .catch(error => 
-        dispatch(deleteDeckError(error)
-      ));
-  } 
+  return async dispatch => {
+    dispatch(deleteDeckBegin());
+    try {
+      await apiService.deleteDeck(deckKey);
+      dispatch(deleteDeckSuccess(deckKey));
+    }
+    catch (error) {
+      return dispatch(deleteDeckError(error));
+    }
+  }
 }
 
 export const deleteDeckBegin = (deckKey) => {
-  console.log("DELETING DECK :", deckKey)
   return {
     type: types.DELETE_DECK_BEGIN,
     key: deckKey
@@ -137,13 +139,6 @@ export const deleteDeckError = (error) => {
     error
   }
 }
-
-// export const addCardToDeck = (deckKey, card) => {
-//   return dispatch => {
-//     dispatch(addCardToDeckBegin());
-//     return api
-//   }
-// }
 
 export const addCardToDeckSuccess = (deck, card) => {
   return {

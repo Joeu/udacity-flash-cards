@@ -32,7 +32,7 @@ class NewDeck extends Component {
       }))
       .catch(error => this.props.addDeckError(error));
 
-    
+    this._clear();
     this.toHome();
   }
 

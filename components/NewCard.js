@@ -39,8 +39,8 @@ class NewCard extends Component {
       .then(this.props.addCardToDeckSuccess(deck, card))
       .catch(error => this.props.addCardToDeckError(error));
 
+    this._clear();
     this.toDeck();
-
   }
 
   _clear = () => {
@@ -49,7 +49,7 @@ class NewCard extends Component {
       question: '',
       answer: 'yes',
       userGuess: null
-    })
+    });
   }
 
   render() {
