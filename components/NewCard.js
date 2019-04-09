@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { TextInput } from 'react-native-gesture-handler';
 import { addCardToDeck } from '../utils/api';
 import { addCardToDeckSuccess, addCardToDeckError } from '../actions/index';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 class NewCard extends Component {
   constructor(props) {
@@ -53,13 +54,15 @@ class NewCard extends Component {
 
   render() {
     return (
-      <View>
+      <View style={styles.container}>
         <Text style={styles.text}>Question</Text>
         <TextInput
           style={styles.input}
           onChangeText={(question) => this.setState({question})}
           value={this.state.question}
           placeholder={this.state.placeholder}
+          multiline={true}
+          numberOfLines={10}
         />
         <Text style={styles.text}>Answer</Text>
         <Picker
@@ -71,7 +74,13 @@ class NewCard extends Component {
           <Picker.Item label="YES" value="yes" />
           <Picker.Item label="NO" value="no" />
         </Picker>
-        <TouchableOpacity onPress={this.submit} style={styles.button}>
+        <TouchableOpacity 
+          disabled={this.state.question === ''}
+          onPress={this.submit} 
+          style={styles.button}>
+          <MaterialCommunityIcons 
+            name='library-plus' 
+            style={styles.newCardButton} />
           <Text>CREATE</Text>
         </TouchableOpacity>
       </View>
@@ -80,9 +89,13 @@ class NewCard extends Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'space-around'
+  },
   button: {
     alignItems: 'center',
-    backgroundColor: '#DDDDDD',
     padding: 10
   },
   text: {
@@ -95,11 +108,14 @@ const styles = StyleSheet.create({
     padding: 15
   },
   input: {
-    height: 40, 
     borderColor: 'gray', 
     borderWidth: 1,
-    paddingLeft: 5,
-    paddingRight: 5
+    width: '80%',
+    textAlignVertical: 'top'
+  },
+  newCardButton: {
+    fontSize: 45,
+    color: 'slategray'
   }
 });
 

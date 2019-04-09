@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { View, Text, Button, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
 class EmptyDeck extends PureComponent {
   render() {

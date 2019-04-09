@@ -55,7 +55,10 @@ class NewDeck extends Component {
             />
         </View>
         <View style={styles.btnView}>
-          <TouchableOpacity onPress={this.submit}  style={styles.button}>
+          <TouchableOpacity 
+            disabled={this.state.title === ''}
+            onPress={this.submit} 
+            style={styles.button}>
             <FontAwesome name='plus-square' style={styles.buttonIcon} />
             <Text>CREATE</Text>
           </TouchableOpacity>
