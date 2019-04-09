@@ -43,6 +43,7 @@ const DeckStack = createStackNavigator({
   Score: {
     screen: Score,
     navigationOptions: {
+      title: 'Score',
       headerForceInset: {top: 'never'}
     }
   }

@@ -4,7 +4,6 @@ import {
   View,
   Text,
   StyleSheet,
-  Platform,
   TouchableOpacity,
   FlatList,
 } from 'react-native';
@@ -36,22 +35,22 @@ class DeckList extends Component {
                 numColumns={columns}
                 renderItem={({ item }) => (
                   <View style={styles.item}>
-                      <TouchableOpacity style={styles.cardButtom}
-                        onPress={() => this.props.navigation.navigate('DeckInfo', deck = { item })}>
-                        <View>
-                          <MaterialCommunityIcons style={styles.btnIcon} name='cards-outline' />
-                        </View>
-                        <View>
-                          <Text style={styles.btnText}>{item.title}</Text>
-                        </View>
-                      </TouchableOpacity>
-                      <View style={styles.separator} />
-                      <TouchableOpacity style={styles.deleteButton}
-                        onPress={() => this.deleteDeck(item.title)}>
-                        <View>
-                          <FontAwesome style={styles.deleteIcon} name='trash' />
-                        </View>
-                      </TouchableOpacity>
+                    <TouchableOpacity style={styles.cardButtom}
+                      onPress={() => this.props.navigation.navigate('DeckInfo', deck = { item })}>
+                      <View>
+                        <MaterialCommunityIcons style={styles.btnIcon} name='cards-outline' />
+                      </View>
+                      <View>
+                        <Text style={styles.btnText}>{item.title}</Text>
+                      </View>
+                    </TouchableOpacity>
+                    <View style={styles.separator} />
+                    <TouchableOpacity style={styles.deleteButton}
+                      onPress={() => this.deleteDeck(item.title)}>
+                      <View>
+                        <FontAwesome style={styles.deleteIcon} name='trash' />
+                      </View>
+                    </TouchableOpacity>
                   </View>
                 )}
               />
@@ -82,7 +81,7 @@ const styles = StyleSheet.create({
     height: 90
   },
   btnText: {
-    fontSize: 40,
+    fontSize: 20,
     fontWeight: 'bold',
     paddingLeft: 5,
     color: 'slategray'
@@ -101,7 +100,7 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     flexGrow: 1,
     flexDirection: 'row',
-    margin: 4,
+    margin: 3,
     flexBasis: 0,
     height: 100
   },

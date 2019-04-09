@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { FontAwesome, Entypo } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
-import { View, Text, Button, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Card from './Card';
 import EmptyDeck from './EmptyDeck';
 import Swiper from 'react-native-swiper';
@@ -13,7 +13,7 @@ class Deck extends Component {
     return {
       title: deckTitle,
       headerRight: (
-        <NewCardHeader 
+        <NewCardHeader
           navigation={navigation}
           deckKey={deckTitle}
         />
@@ -23,7 +23,7 @@ class Deck extends Component {
 
   _swipeToNext = () => {
     let { index, total } = this.refs.swiper.state;
-    if (index + 1 < total){
+    if (index + 1 < total) {
       this.refs.swiper.scrollBy(1);
     } else {
       index = total - 1;
@@ -33,6 +33,7 @@ class Deck extends Component {
   render() {
     const { navigation } = this.props;
     let deck = navigation.state.params.deck;
+    let total = deck.cards.length;
     let { qtdAndswers, qtdCorrect } = this.props.metaData;
     this.swiper = undefined;
 
@@ -42,21 +43,6 @@ class Deck extends Component {
           <Text style={[styles.paginationText, { color: 'black' }]}>
             {index + 1}/{total}
           </Text>
-          {qtdAndswers === total
-            &&  
-              <View>
-                <TouchableOpacity onPress={() => navigation.navigate(
-                    'Score', 
-                    { 
-                      deck,
-                      qtdCorrect,
-                      total
-                    }
-                )}>
-                  <Text>View Score</Text>           
-                </TouchableOpacity>
-              </View>
-          }
         </View>
       )
     }
@@ -64,27 +50,46 @@ class Deck extends Component {
       <View style={styles.container}>
         {
           deck.cards && deck.cards.length > 0
-          ? 
+            ?
             <View style={styles.content}>
-              <Swiper 
+              <Swiper
                 ref='swiper'
                 showsButtons={false}
                 showsPagination={true}
                 renderPagination={renderPagination}
                 loop={false}
               >
-              {deck.cards.map((card) => {
-                return (
-                  <View style={styles.content} key={card.key}>
-                    <Card 
-                      swipeToNext={this._swipeToNext}
-                      item={card} 
-                      deck={deck} />
-                  </View>
-                )})}
+                {deck.cards.map((card) => {
+                  return (
+                    <View style={styles.content} key={card.key}>
+                      <Card
+                        swipeToNext={this._swipeToNext}
+                        item={card}
+                        deck={deck} />
+                    </View>
+                  )
+                })}
               </Swiper>
+              {qtdAndswers === total
+                &&
+                <View style={styles.showScoreView}>
+                  <TouchableOpacity onPress={() => navigation.navigate(
+                    'Score',
+                    {
+                      deck,
+                      qtdCorrect,
+                      total
+                    }
+                  )}>
+                    <Text style={styles.showScoreText}>
+                      View Score {` `}
+                      <MaterialCommunityIcons style={styles.showScoreIcon} name='bullseye-arrow' />
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              }
             </View>
-          : <EmptyDeck />
+            : <EmptyDeck />
         }
       </View>
     )
@@ -102,10 +107,23 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
   },
+  showScoreView: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    height: '10%',
+  },
+  showScoreText: {
+    fontSize: 20,
+    color: 'slategray'
+  },
+  showScoreIcon: {
+    fontSize: 20
+  },
   paginationStyle: {
     position: 'absolute',
-    bottom: 10,
-    right: 10
+    top: 5,
+    right: 8
   },
   paginationText: {
     color: 'white',
@@ -124,7 +142,7 @@ const _getDeckMetaData = (state, ownProps) => {
       card.userGuess !== null && data.qtdAndswers++;
     }
   )
-  
+
   return data;
 }
 

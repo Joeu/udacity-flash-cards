@@ -9,6 +9,7 @@ class Card extends Component {
 
   state = {
     cardBGColor: 'transparent',
+    flipText: 'Flip to reveal answer'
   }
 
   componentWillMount() {
@@ -43,9 +44,8 @@ class Card extends Component {
   }
 
   _checkIfAnswerIsCorrect = (answer) => {
-    const _correct = this.props.item.answer.toLowerCase() === answer.toLowerCase();
     this.setState({
-      userGuess: answer
+      userGuess: answer,
     });
 
     setUserAnswer(this.props.deck, this.props.item, answer)
@@ -57,12 +57,18 @@ class Card extends Component {
 
   _flipCard = () => {
     if (this.value >= 90) {
+      this.setState({
+        flipText: 'Flip to reveal answer'
+      });
       Animated.spring(this.animatedValue, {
         toValue: 0,
         friction: 8,
         tension: 10
       }).start();
     } else {
+      this.setState({
+        flipText: 'Back to Question'
+      });
       Animated.spring(this.animatedValue, {
         toValue: 180,
         friction: 8,
@@ -86,7 +92,7 @@ class Card extends Component {
     return (
       <View style={styles.box}>
 
-        <View style={[styles.container, styles.box]}>
+        <View style={[styles.cardLayout, styles.box]}>
           <Animated.View style={[
             styles.flipCard,
             frontAnimatedStyle,
@@ -102,7 +108,7 @@ class Card extends Component {
                 style={[styles.btn, { flex: 1 }]}
                 onPress={() => this._checkIfAnswerIsCorrect('yes')}>
                 <MaterialCommunityIcons
-                  style={styles.answerText}
+                  style={styles.btnIcon}
                   name='thumb-up-outline'
                 />
               </TouchableOpacity>
@@ -110,7 +116,7 @@ class Card extends Component {
                 style={[styles.btn, { flex: 1 }]}
                 onPress={() => this._checkIfAnswerIsCorrect('no')}>
                 <MaterialCommunityIcons
-                  style={styles.answerText}
+                  style={styles.btnIcon}
                   name='thumb-down-outline'
                 />
               </TouchableOpacity>
@@ -136,12 +142,12 @@ class Card extends Component {
           </Animated.View>
         </View>
 
-        <View style={[styles.box, styles.answerBox]}>
+        <View style={styles.box}>
           <TouchableOpacity
-            style={[styles.btn, { flex: 1 }]}
+            style={styles.btn}
             onPress={() => this._flipCard()}>
-            <MaterialIcons style={styles.answerText} name='flip' />
-            <Text style={styles.revealText}>Flip</Text>
+            <MaterialIcons style={styles.btnIcon} name='flip' />
+            <Text style={styles.revealText}>{this.state.flipText}</Text>
           </TouchableOpacity>
         </View>
 
@@ -156,11 +162,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  container: {
+  cardLayout: {
     marginLeft: 25,
     marginRight: 25,
     marginTop: 30,
-    marginBottom: 10,
     borderColor: 'orange',
     borderWidth: 1,
     borderRadius: 5
@@ -180,16 +185,14 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center'
   },
-  answerText: {
+  btnIcon: {
     fontSize: 55,
-    // justifyContent: 'center',
-    textAlign: 'center'
+    justifyContent: 'center',
+    textAlign: 'center',
+    color: 'slategray'
   },
   backCard: {
-    flexDirection: 'column',
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    marginTop: 40
   },
   flipCard: {
     backfaceVisibility: 'hidden'

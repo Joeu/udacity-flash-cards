@@ -76,7 +76,8 @@ const styles = StyleSheet.create({
     paddingTop: 20
   },
   buttonIcon: {
-    fontSize: 40
+    fontSize: 40,
+    color: 'slategray'
   },
   text: {
     textAlign: 'center',

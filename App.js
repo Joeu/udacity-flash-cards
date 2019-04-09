@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, StatusBar } from 'react-native';
+import { View, StatusBar } from 'react-native';
 import TabsContainer from './components/TabsContainer';
 import { Constants } from 'expo';
 import { createStore, applyMiddleware } from 'redux';

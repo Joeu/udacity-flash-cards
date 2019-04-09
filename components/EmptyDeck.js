@@ -1,13 +1,15 @@
 import React, { PureComponent } from 'react';
-import { FontAwesome, Entypo } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { View, Text, Button, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
 
 class EmptyDeck extends PureComponent {
   render() {
     return (
-      <View showsButtons={true}>
+      <View style={styles.container} showsButtons={true}>
         <Text>You can create a new Card question in the </Text>
-          <FontAwesome name='comment' style={styles.newCardButton} /> 
+        <MaterialCommunityIcons 
+          name='library-plus' 
+          style={styles.newCardButton} />
         <Text>above!</Text>
       </View>
     )
@@ -22,8 +24,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   newCardButton: {
-    marginRight: 20,
-    fontSize: 30
+    fontSize: 30,
+    color: 'slategray'
   }
 });
 

@@ -23,23 +23,22 @@ class Deck extends Component {
     const deck = navigation.state.params.item;
     return (
       <View style={styles.container}>
+        <View>
+          <Text style={styles.textTitle}>
+            {deck.title}
+          </Text>
+          <Text style={styles.textInfo}>
+            {deck.cards.length} - Cards
+          </Text>
+        </View>
         {
           deck.cards && deck.cards.length > 0
           ? 
-            <View>
-              <Text style={styles.textTitle}>
-                {deck.title}
-              </Text>
-              <Text style={styles.textInfo}>
-                {deck.cards.length} - Cards
-              </Text>
-              <View style={styles.playView}>
-                <TouchableOpacity onPress={() => navigation.navigate('Deck', { deck: deck })}>
-                  {/* <FontAwesome name='play-circle' style={styles.startBtn} /> */}
-                  <MaterialCommunityIcons style={styles.startBtn} name='cards-playing-outline' />
-                  <Text>Start Quiz</Text>
-                </TouchableOpacity>
-              </View>
+            <View style={styles.playView}>
+              <TouchableOpacity onPress={() => navigation.navigate('Deck', { deck: deck })}>
+                <MaterialCommunityIcons style={styles.startBtn} name='gamepad-variant' />
+                <Text>Start Quiz</Text>
+              </TouchableOpacity>
             </View>
           : <EmptyDeck />
         }
