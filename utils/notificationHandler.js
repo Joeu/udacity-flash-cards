@@ -1,6 +1,7 @@
 import { AsyncStorage } from 'react-native';
 import { FLASH_CARDS_NOTIFICATION } from './constants';
-import { Notifications, Permissions } from 'expo';
+import { Notifications } from 'expo';
+import Permissions from 'expo-permissions';
 
 export const createNotification = () => {
   return {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, StatusBar } from 'react-native';
 import TabsContainer from './components/TabsContainer';
-import { Constants } from 'expo';
+import Constants from 'expo-constants';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import reducer from './reducers';
@@ -20,8 +20,8 @@ function UdaciStatusBar({backgroundColor, ...props}) {
 
 export default class App extends Component {
   componentDidMount() {
-    clearLocalNotification()
-      .then(setLocalNotification);
+    // clearLocalNotification()
+    //   .then(setLocalNotification);
   }
 
   render() {

@@ -1,4 +1,6 @@
-import { createMaterialTopTabNavigator, createStackNavigator, createAppContainer } from 'react-navigation';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
+import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import DeckList from './DeckList';
 import NewDeck from './NewDeck';
 import Deck from './Deck';
